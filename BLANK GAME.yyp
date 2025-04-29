@@ -52,6 +52,7 @@
     {"id":{"name":"obj_cutscene_controller1","path":"objects/obj_cutscene_controller1/obj_cutscene_controller1.yy",},},
     {"id":{"name":"obj_mc","path":"objects/obj_mc/obj_mc.yy",},},
     {"id":{"name":"obj_mother","path":"objects/obj_mother/obj_mother.yy",},},
+    {"id":{"name":"obj_SchoolStart1","path":"objects/obj_SchoolStart1/obj_SchoolStart1.yy",},},
     {"id":{"name":"obj_testMC","path":"objects/obj_testMC/obj_testMC.yy",},},
     {"id":{"name":"obj_testNPC","path":"objects/obj_testNPC/obj_testNPC.yy",},},
     {"id":{"name":"counselor_office","path":"rooms/counselor_office/counselor_office.yy",},},
