@@ -42,3 +42,7 @@ if (choice_active) {
         }
     }
 }
+
+// --- DEBUG: Show player mood
+draw_set_color(c_white);
+draw_text(20, 20, "Mood: " + string(player_mood));
