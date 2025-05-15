@@ -5,3 +5,4 @@ function reset_typewriter(){
 	typewriter_counter = 0;
 	typing_sound_timer = 0;
 }
+

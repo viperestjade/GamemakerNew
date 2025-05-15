@@ -7,4 +7,4 @@ if (audio_is_playing(global.menu_music)) {
 
 global.cutscene_id = 0;
 global.cutscene_active = true;
-room_goto(house_cutscene_1);
+room_goto(house_day1_scene1);
