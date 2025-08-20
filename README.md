@@ -1,2 +1,2 @@
-# EoH
+# Echoes-of-Hope
 

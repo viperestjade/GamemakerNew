@@ -1,20 +1,47 @@
 switch (global.cutscene_id) {
     case 3: // Scene: Muted Mornings
         if (fade_alpha > 0) fade_alpha -= 0.02;
-       
+
+        // --- Typewriter logic ---
         if (dialogue_visible) {
-            typewriter_counter += 1;
+            var total_dialogue_length = string_length(current_dialogue);
+            var dialogue_is_fully_typed = (typewriter_index >= total_dialogue_length);
+
+            if (!dialogue_is_fully_typed) { // Still typing
+                typewriter_counter += 1;
                 if (typewriter_counter >= typewriter_speed) {
                     typewriter_counter = 0;
-                    if (typewriter_index < string_length(current_dialogue)) {
-                        typewriter_index += 1;
-                        displayed_text = string_copy(current_dialogue, 1, typewriter_index);
+                    typewriter_index = min(typewriter_index + 1, total_dialogue_length);
+                    displayed_text = string_copy(current_dialogue, 1, typewriter_index);
+
+                    // 🔊 Added: Typing sound for visible characters
+                    var char = string_char_at(current_dialogue, typewriter_index);
+                    if (char != " ") {
+                        audio_play_sound(snd_type, 0, false);
+                        audio_sound_pitch(snd_type, random_range(0.9, 0.95));
                     }
-                }            
-        } else {
+                }
+            } else { // Typing finished, ensure displayed_text is fully complete
+                displayed_text = current_dialogue;
+            }
+        } else { // Dialogue not visible, reset typewriter state
             typewriter_index = 0;
             displayed_text = "";
+            typewriter_counter = 0; // Ensure counter is reset when dialogue box is hidden
         }
+
+        // --- NEW LOGIC: Handle Dialogue Skip with Space Key ---
+        // If space is pressed AND dialogue is visible AND dialogue is still typing
+        if (dialogue_visible && keyboard_check_pressed(vk_space) && typewriter_index < string_length(current_dialogue)) {
+            // Skip to the end of the current dialogue immediately
+            typewriter_index = string_length(current_dialogue);
+            displayed_text = current_dialogue;
+            // Use 'exit;' to prevent the dialogue from advancing to the next stage
+            // in the same frame that the player skipped the typing.
+            // A subsequent space press will then advance the dialogue.
+            exit;
+        }
+        // --- END NEW LOGIC ---
 
         switch (cutscene_step) {
             case 0:
@@ -23,7 +50,7 @@ switch (global.cutscene_id) {
                     dialogue_speaker = "Narration";
                     current_dialogue = "The sun barely slips through the curtains. The room feels colder today, like the quiet before a storm, only there’s no yelling this time.";
                     dialogue_visible = true;
-                } 
+                }
                 else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
                     dialogue_visible = false;
                     cutscene_step = 1;
@@ -35,7 +62,7 @@ switch (global.cutscene_id) {
                     dialogue_speaker = "Inner Thought";
                     current_dialogue = "Maybe today won’t be like the others.";
                     dialogue_visible = true;
-                } 
+                }
                 else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
                     dialogue_visible = false;
                     cutscene_step = 2;
@@ -47,7 +74,7 @@ switch (global.cutscene_id) {
                     dialogue_speaker = "Narration";
                     current_dialogue = "You slip out of bed, tugging on your clothes mechanically, as if you’ve done this too many times to care. Your bag feels heavier than usual, and your thoughts, they’re just as scattered.";
                     dialogue_visible = true;
-                } 
+                }
                 else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
                     dialogue_visible = false;
                     cutscene_step = 3;
@@ -59,10 +86,10 @@ switch (global.cutscene_id) {
                     dialogue_speaker = "Narration";
                     current_dialogue = "The sound of clattering dishes drifts to your room. It’s only your mom. She must be making breakfast, but there’s no noise beyond that. No shuffling, no small talk. Just the faint, rhythmic sound of someone trying not to be noticed.";
                     dialogue_visible = true;
-                } 
+                }
                 else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
                     room_goto(house_day2_scene1_1);
-					dialogue_visible = false;
+                    dialogue_visible = false;
                     cutscene_step = 4;
                 }
                 break;
@@ -72,7 +99,7 @@ switch (global.cutscene_id) {
                     dialogue_speaker = "Mother";
                     current_dialogue = "I made eggs. You’ve got time, if you want to eat.";
                     dialogue_visible = true;
-                } 
+                }
                 else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
                     dialogue_visible = false;
                     cutscene_step = 5;
@@ -88,7 +115,7 @@ switch (global.cutscene_id) {
                     ];
                     choice_selected = 0;
                     choice_active = true;
-                } 
+                }
                 else if (choice_active) {
                     if (keyboard_check_pressed(vk_down)) {
                         choice_selected = (choice_selected + 1) % array_length(choice_options);
@@ -127,7 +154,7 @@ switch (global.cutscene_id) {
                     dialogue_speaker = "Narration";
                     current_dialogue = "You sit down at the small kitchen table. Your mom is still standing at the stove, her movements slow and mechanical, like she's trying to avoid saying anything else.";
                     dialogue_visible = true;
-                } 
+                }
                 else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
                     dialogue_visible = false;
                     cutscene_step = 6.5;
@@ -139,7 +166,7 @@ switch (global.cutscene_id) {
                     dialogue_speaker = "Narration";
                     current_dialogue = "The eggs sit in front of you, warm but unappealing. The house is quieter than usual, no loud arguments or tension filling the space, just the soft hum of the kitchen and the muted clatter of your mom’s movements.";
                     dialogue_visible = true;
-                } 
+                }
                 else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
                     dialogue_visible = false;
                     cutscene_step = 7;
@@ -151,7 +178,7 @@ switch (global.cutscene_id) {
                     dialogue_speaker = "Mother";
                     current_dialogue = "I’ll try to be home earlier today. I know things haven’t been easy for either of us.";
                     dialogue_visible = true;
-                } 
+                }
                 else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
                     dialogue_visible = false;
                     cutscene_step = 7.5;
@@ -163,7 +190,7 @@ switch (global.cutscene_id) {
                     dialogue_speaker = "You";
                     current_dialogue = "Okay";
                     dialogue_visible = true;
-                } 
+                }
                 else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
                     dialogue_visible = false;
                     cutscene_step = 8;
@@ -175,7 +202,7 @@ switch (global.cutscene_id) {
                     dialogue_speaker = "Narration";
                     current_dialogue = "No words need to be said. Your mom doesn’t press you, and you don’t press her either. It’s just quiet, the kind of quiet that feels like waiting for something, but you’re not sure what.";
                     dialogue_visible = true;
-                } 
+                }
                 else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
                     dialogue_visible = false;
                     cutscene_step = 8.5;
@@ -187,7 +214,7 @@ switch (global.cutscene_id) {
                     dialogue_speaker = "Narration";
                     current_dialogue = "After a few moments, you stand up, gathering your bag, and as you head for the door, your mom watches you with those tired eyes of hers. She doesn’t say anything else, just nods.";
                     dialogue_visible = true;
-                } 
+                }
                 else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
                     dialogue_visible = false;
                     cutscene_step = 9;

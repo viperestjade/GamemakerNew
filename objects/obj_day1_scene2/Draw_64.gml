@@ -53,16 +53,23 @@ if (choice_active) {
     for (var i = 0; i < array_length(choice_options); i++) {
         var choice_y = base_y + (i * spacing);
 
+        var text = choice_options[i];
+        var text_width = string_width(text);
+        var text_height = string_height(text);
+
+        var padding_x = 10;
+        var padding_y = 5;
+        var box_left = base_x - padding_x;
+        var box_top = choice_y - padding_y;
+        var box_right = base_x + text_width + padding_x;
+        var box_bottom = choice_y + text_height + padding_y;
+
         if (i == choice_selected) {
             draw_set_color(c_dkgray);
-            draw_rectangle(base_x - 10, choice_y - 5, base_x + 400, choice_y + 30, false);
+            draw_rectangle(box_left, box_top, box_right, box_bottom, false);
         }
 
         draw_set_color(i == choice_selected ? c_white : c_gray);
-        draw_text(base_x, choice_y, choice_options[i]);
+        draw_text(base_x, choice_y, text);
     }
 }
-
-// --- DEBUG: Show player mood
-draw_set_color(c_white);
-draw_text(20, 20, "Mood: " + string(player_mood));

@@ -4,20 +4,49 @@ switch (global.cutscene_id) {
     case 0: // Cutscene 1: Same Morning, Different Storm
         if (fade_alpha > 0) fade_alpha -= 0.02;
 
+        // --- Typewriter logic ---
         if (dialogue_visible) {
-            typewriter_counter += 1;
-            if (typewriter_counter >= typewriter_speed) {
-                typewriter_counter = 0;
-                if (typewriter_index < string_length(current_dialogue)) {
-                    typewriter_index += 1;
+            var total_dialogue_length = string_length(current_dialogue);
+            var dialogue_is_fully_typed = (typewriter_index >= total_dialogue_length);
+
+            if (!dialogue_is_fully_typed) { // Still typing
+                typewriter_counter += 1;
+                if (typewriter_counter >= typewriter_speed) {
+                    typewriter_counter = 0;
+                    // Increment typewriter_index, but cap it at the total length to prevent errors
+                    typewriter_index = min(typewriter_index + 1, total_dialogue_length);
                     displayed_text = string_copy(current_dialogue, 1, typewriter_index);
+
+                    // 🔊 Added: Typing sound for visible characters
+                    var char = string_char_at(current_dialogue, typewriter_index);
+                    if (char != " ") {
+                        audio_play_sound(snd_type, 0, false);
+                        audio_sound_pitch(snd_type, random_range(0.9, 0.95));
+                    }
                 }
+            } else { // Typing finished, ensure displayed_text is fully complete
+                displayed_text = current_dialogue;
             }
-        } else {
+        } else { // Dialogue not visible, reset typewriter state
             typewriter_index = 0;
             displayed_text = "";
+            typewriter_counter = 0; // Ensure counter is reset when dialogue box is hidden
         }
 
+        // --- NEW LOGIC: Handle Dialogue Skip with Space Key ---
+        // If space is pressed AND dialogue is visible AND dialogue is still typing
+        if (dialogue_visible && keyboard_check_pressed(vk_space) && typewriter_index < string_length(current_dialogue)) {
+            // Skip to the end of the current dialogue immediately
+            typewriter_index = string_length(current_dialogue);
+            displayed_text = current_dialogue;
+            // Use 'exit;' to prevent the dialogue from advancing to the next stage
+            // in the same frame that the player skipped the typing.
+            // A subsequent space press will then advance the dialogue.
+            exit;
+        }
+        // --- END NEW LOGIC ---
+
+        // --- Existing Dialogue Progression Logic ---
         switch (cutscene_step) {
             case 0:
                 if (dialogue_stage == 0 && !dialogue_visible) {
@@ -101,7 +130,7 @@ switch (global.cutscene_id) {
                 else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
                     cutscene_step = 2;
                     dialogue_visible = false;
-					room_goto(house_day1_scene1_1);
+                    room_goto(house_day1_scene1_1);
                 }
                 break;
 
@@ -176,8 +205,8 @@ switch (global.cutscene_id) {
                 else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
                     global.cutscene_id = 1;
                     global.cutscene_active = true;
-					dialogue_visible = false;
-					reset_typewriter();
+                    dialogue_visible = false;
+                    reset_typewriter();
                     room_goto(school_day1_scene1);
                 }
                 break;

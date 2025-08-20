@@ -17,7 +17,7 @@ dialogue_visible = false;
 dialogue_speaker = "";
 current_dialogue = "";
 displayed_text = "";
-typewriter_speed = .001;
+typewriter_speed = 1.2;
 typewriter_counter = 0;
 typewriter_index = 0;
 
