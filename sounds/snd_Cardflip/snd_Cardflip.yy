@@ -1,6 +1,6 @@
 {
   "$GMSound":"",
-  "%Name":"snd_menu_music",
+  "%Name":"snd_Cardflip",
   "audioGroupId":{
     "name":"audiogroup_default",
     "path":"audiogroups/audiogroup_default",
@@ -9,17 +9,17 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":42.804535,
-  "name":"snd_menu_music",
+  "duration":0.9665306,
+  "name":"snd_Cardflip",
   "parent":{
-    "name":"Sounds",
-    "path":"folders/Sounds.yy",
+    "name":"snd_MatchingGame",
+    "path":"folders/Sounds/snd_MatchingGame.yy",
   },
   "preload":false,
   "resourceType":"GMSound",
   "resourceVersion":"2.0",
   "sampleRate":44100,
-  "soundFile":"snd_menu_music.wav",
+  "soundFile":"snd_Cardflip.mp3",
   "type":0,
   "volume":1.0,
 }

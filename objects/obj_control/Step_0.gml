@@ -27,9 +27,13 @@ if goes==0
 	room_restart();
 }
 
-if matches == 3
-{
-	show_message("You Win");
-	room_goto(school_day1_scene1);
+if matches == global.pairs {
+    if global.level < 3 {
+        global.level++;
+        room_restart();
+    } else {
+        show_message("You Win All Levels!");
+        room_goto(school_day1_scene1);
+    }
 }
 		
