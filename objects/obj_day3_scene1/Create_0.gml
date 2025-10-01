@@ -13,7 +13,7 @@ cutscene_id = global.cutscene_id;
 fade_alpha = 1;
 
 // Dialogue system
-dialogue_visible = false;
+global.dialogue_visible = false;
 dialogue_speaker = "";
 current_dialogue = "";
 displayed_text = "";

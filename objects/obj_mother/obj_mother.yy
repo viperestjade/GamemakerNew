@@ -1,15 +1,15 @@
 {
   "$GMObject":"",
-  "%Name":"obj_mother",
+  "%Name":"obj_Mother",
   "eventList":[
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
+    {"$GMEvent":"v1","%Name":"","collisionObjectId":{"name":"obj_MC","path":"objects/obj_MC/obj_MC.yy",},"eventNum":0,"eventType":4,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"obj_mother",
+  "name":"obj_Mother",
   "overriddenProperties":[],
   "parent":{
-    "name":"obj_npc",
-    "path":"folders/Objects/obj_npc.yy",
+    "name":"Characters",
+    "path":"folders/Objects/Characters.yy",
   },
   "parentObjectId":null,
   "persistent":false,
@@ -30,8 +30,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_mother_idle",
-    "path":"sprites/spr_mother_idle/spr_mother_idle.yy",
+    "name":"spr_Mother_Idle",
+    "path":"sprites/spr_Mother_Idle/spr_Mother_Idle.yy",
   },
   "spriteMaskId":null,
   "visible":true,

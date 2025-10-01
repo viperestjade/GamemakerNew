@@ -1,16 +1,16 @@
 {
   "$GMObject":"",
-  "%Name":"obj_mc",
+  "%Name":"obj_MC",
   "eventList":[
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
+    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"obj_mc",
+  "name":"obj_MC",
   "overriddenProperties":[],
   "parent":{
-    "name":"obj_mc",
-    "path":"folders/Objects/obj_mc.yy",
+    "name":"Characters",
+    "path":"folders/Objects/Characters.yy",
   },
   "parentObjectId":null,
   "persistent":false,
@@ -31,8 +31,8 @@
   "resourceVersion":"2.0",
   "solid":true,
   "spriteId":{
-    "name":"spr_mcIdle",
-    "path":"sprites/spr_mcIdle/spr_mcIdle.yy",
+    "name":"spr_MC_Idle",
+    "path":"sprites/spr_MC_Idle/spr_MC_Idle.yy",
   },
   "spriteMaskId":null,
   "visible":true,

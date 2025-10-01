@@ -1,329 +1,154 @@
-switch (global.cutscene_id) {
-    case 5: // Scene: Homeward Bound
-        if (fade_alpha > 0) fade_alpha -= 0.02;
+// --- Fade-in, Typewriter, and Skip Logic ---
+if (fade_alpha > 0) fade_alpha -= 0.02;
 
-        // --- Typewriter logic ---
-        if (dialogue_visible) {
-            var total_dialogue_length = string_length(current_dialogue);
-            var dialogue_is_fully_typed = (typewriter_index >= total_dialogue_length);
+if (global.dialogue_visible) {
+    var total_dialogue_length = string_length(current_dialogue);
+    
+    if (typewriter_index < total_dialogue_length) {
+        if (keyboard_check_pressed(vk_space)) {
+            typewriter_index = total_dialogue_length;
+            exit; // Exit script for this frame to show full text immediately
+        }
+        
+        typewriter_counter += 1;
+        if (typewriter_counter >= typewriter_speed) {
+            typewriter_counter = 0;
+            typewriter_index = min(typewriter_index + 1, total_dialogue_length);
+        }
+    }
+    
+    displayed_text = string_copy(current_dialogue, 1, typewriter_index);
+    
+} else {
+    typewriter_index = 0;
+    displayed_text = "";
+    typewriter_counter = 0;
+}
 
-            if (!dialogue_is_fully_typed) { // Still typing
-                typewriter_counter += 1;
-                if (typewriter_counter >= typewriter_speed) {
-                    typewriter_counter = 0;
-                    typewriter_index = min(typewriter_index + 1, total_dialogue_length);
-                    displayed_text = string_copy(current_dialogue, 1, typewriter_index);
+// --- Scene Progression ---
+switch (cutscene_step) {
+    case 0: // Opening narration
+        if (!global.dialogue_visible) {
+            dialogue_speaker = "Narration";
+            current_dialogue = "The bell rings, but today, it doesn’t feel like the usual signal to start a class. You slip into your seat, trying to avoid the gaze of anyone nearby. The room hums with chatter, but your mind feels far away, distant from the buzz of everyday school life.";
+            global.dialogue_visible = true;
+        }
+        else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
+            global.dialogue_visible = false;
+            cutscene_step = 1;
+        }
+        break;
 
-                    // 🔊 Added: Typing sound for visible characters
-                    var char = string_char_at(current_dialogue, typewriter_index);
-                    if (char != " ") {
-                        audio_play_sound(snd_type, 0, false);
-                        audio_sound_pitch(snd_type, random_range(0.9, 0.95));
-                    }
-                }
-            } else { // Typing finished, ensure displayed_text is fully complete
-                displayed_text = current_dialogue;
+    case 1: // Second narration, triggers teacher movement
+        if (!global.dialogue_visible) {
+            dialogue_speaker = "Narration";
+            current_dialogue = "You can’t focus on anything. The teacher’s voice seems like it’s coming from underwater, and the words just blur into a stream of noise.";
+            global.dialogue_visible = true;
+        }
+        else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
+            global.dialogue_visible = false;
+            
+            // --- START OF TEACHER MOVEMENT ---
+            with (obj_Teacher) {
+                target_x = 415; 
+                target_y = self.y;
+                is_moving_automatically = true;
             }
-        } else { // Dialogue not visible, reset typewriter state
-            typewriter_index = 0;
-            displayed_text = "";
-            typewriter_counter = 0; // Ensure counter is reset when dialogue box is hidden
+            
+            cutscene_step = 1.2;
         }
+        break;
 
-        // --- NEW LOGIC: Handle Dialogue Skip with Space Key ---
-        // If space is pressed AND dialogue is visible AND dialogue is still typing
-        if (dialogue_visible && keyboard_check_pressed(vk_space) && typewriter_index < string_length(current_dialogue)) {
-            // Skip to the end of the current dialogue immediately
-            typewriter_index = string_length(current_dialogue);
-            displayed_text = current_dialogue;
-            // Use 'exit;' to prevent the dialogue from advancing to the next stage
-            // in the same frame that the player skipped the typing.
-            // A subsequent space press will then advance the dialogue.
-            exit;
+    case 1.2: // Wait for first movement
+        if (!instance_exists(obj_Teacher) || !obj_Teacher.is_moving_automatically) {
+            with (obj_Teacher) {
+                target_x = self.x;
+                target_y = obj_MC.y;
+                is_moving_automatically = true;
+            }
+            cutscene_step = 1.4;
         }
-        // --- END NEW LOGIC ---
+        break;
+        
+    case 1.4: // Wait for second movement
+        if (!instance_exists(obj_Teacher) || !obj_Teacher.is_moving_automatically) {
+            cutscene_step = 2;
+        }
+        break;
 
-        switch (cutscene_step) {
-            case 0:
-                if (fade_alpha > 0) fade_alpha -= 0.02;
-                if (!dialogue_visible) {
-                    dialogue_speaker = "Narration";
-                    current_dialogue = "You arrive home later than usual, the sky already dimming as the weight of the day presses on. The house feels quieter than before, but in a different way. The tension from this morning has shifted, and you can’t quite tell whether it’s better or worse.";
-                    dialogue_visible = true;
-                }
-                else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
-                    dialogue_visible = false;
-                    cutscene_step = 1;
-                }
-                break;
+    case 2: // Teacher dialogue
+        if (!global.dialogue_visible) {
+            dialogue_speaker = "Teacher";
+            current_dialogue = "Hey, you doing alright? You’ve been kind of quiet today.";
+            global.dialogue_visible = true;
+        }
+        else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
+            global.dialogue_visible = false;
+            cutscene_step = 3;
+        }
+        break;
 
-            case 1:
-                if (!dialogue_visible) {
-                    dialogue_speaker = "Narration";
-                    current_dialogue = "There’s the quiet clink of cutlery. The faint sound of the news hums from the living room. A gentle rustle of paper. You hear your parents, but they’re not talking to each other.";
-                    dialogue_visible = true;
-                }
-                else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
-                    dialogue_visible = false;
-                    cutscene_step = 2;
-                }
-                break;
+    case 3: // Narration after teacher speaks
+        if (!global.dialogue_visible) {
+            dialogue_speaker = "Narration";
+            current_dialogue = "Your teacher's concern catches you off guard. You shrug, not feeling like explaining anything right now. You hope they'll drop it, but the teacher lingers for a moment, scanning you carefully.";
+            global.dialogue_visible = true;
+        }
+        else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
+            global.dialogue_visible = false;
+            cutscene_step = 4;
+        }
+        break;
 
-            case 2:
-                if (!dialogue_visible) {
-                    dialogue_speaker = "Narration";
-                    current_dialogue = "You move slowly toward the kitchen.";
-                    dialogue_visible = true;
-                }
-                else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
-                    room_goto(house_day2_scene2_1);
-                    dialogue_visible = false;
-                    cutscene_step = 3;
-                }
-                break;
+    case 4: // First player choice
+        if (!choice_made && !choice_active) {
+            choice_options = [
+                "Just got some stuff on my mind.",
+                "I’m fine. Don’t worry about me.",
+                "I’m fine, just tired."
+            ];
+            choice_selected = 0;
+            choice_active = true;
+        }
+        else if (choice_active) {
+            // Choice navigation
+            if (keyboard_check_pressed(ord("S"))) choice_selected = (choice_selected + 1) % array_length(choice_options);
+            if (keyboard_check_pressed(ord("W"))) choice_selected = (choice_selected - 1 + array_length(choice_options)) % array_length(choice_options);
+            
+            // Choice confirmation
+            if (keyboard_check_pressed(ord("E"))) {
+                choice_made = true;
+                choice_active = false;
+                dialogue_speaker = "You";
+                current_dialogue = choice_options[choice_selected];
+                global.dialogue_visible = true;
+                
+                if (choice_selected == 0) player_mood += 1;
+                else if (choice_selected == 1) player_mood -= 1;
+                
+                global.player_mood = player_mood;
+                cutscene_step = 4.5;
+            }
+        }
+        break;
 
-            case 3:
-                if (!dialogue_visible) {
-                    dialogue_speaker = "Mother";
-                    current_dialogue = "There’s stew on the stove. You can heat some up if you’re hungry.";
-                    dialogue_visible = true;
-                }
-                else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
-                    dialogue_visible = false;
-                    cutscene_step = 4;
-                }
-                break;
+    case 4.5: // Wait for player to read their choice
+        if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
+            global.dialogue_visible = false;
+            cutscene_step = 5;
+        }
+        break;
 
-            case 4:
-                if (!dialogue_visible) {
-                    dialogue_speaker = "Father";
-                    current_dialogue = "Long day?";
-                    dialogue_visible = true;
-                }
-                else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
-                    dialogue_visible = false;
-                    cutscene_step = 5;
-                }
-                break;
-
-            case 5:
-                if (!dialogue_visible) {
-                    dialogue_speaker = "Narration";
-                    current_dialogue = "It’s the first thing he’s said to you in a while. It doesn’t demand a reply, just leaves space for one if you want it.";
-                    dialogue_visible = true;
-                }
-                else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
-                    dialogue_visible = false;
-                    cutscene_step = 6;
-                }
-                break;
-
-            case 6:
-                if (!dialogue_visible) {
-                    dialogue_speaker = "Narration";
-                    current_dialogue = "You give a small shrug. Not because you’re trying to shut them out, but because you don’t know what to say yet.";
-                    dialogue_visible = true;
-                }
-                else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
-                    dialogue_visible = false;
-                    cutscene_step = 7;
-                }
-                break;
-
-            case 7:
-                if (!dialogue_visible) {
-                    dialogue_speaker = "Mother";
-                    current_dialogue = "There’s still warm bread. I can slice some, if you want.";
-                    dialogue_visible = true;
-                }
-                else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
-                    dialogue_visible = false;
-                    cutscene_step = 8;
-                }
-                break;
-
-            case 8:
-                if (!dialogue_visible) {
-                    dialogue_speaker = "Father";
-                    current_dialogue = "I think she can manage, hon. But if you want it, it’s there.";
-                    dialogue_visible = true;
-                }
-                else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
-                    dialogue_visible = false;
-                    cutscene_step = 9;
-                }
-                break;
-
-            case 9:
-                if (!dialogue_visible) {
-                    dialogue_speaker = "Narration";
-                    current_dialogue = "They’re trying, in their own quiet ways. No pressure. No questions. Just… space. Space that feels a little easier to breathe in tonight.";
-                    dialogue_visible = true;
-                }
-                else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
-                    dialogue_visible = false;
-                    cutscene_step = 10;
-                }
-                break;
-
-            case 10:
-                if (!dialogue_visible) {
-                    dialogue_speaker = "Mother";
-                    current_dialogue = "We’ve been… thinking about things. About how things have felt lately.";
-                    dialogue_visible = true;
-                }
-                else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
-                    dialogue_visible = false;
-                    cutscene_step = 11;
-                }
-                break;
-
-            case 11:
-                if (!dialogue_visible) {
-                    dialogue_speaker = "Father";
-                    current_dialogue = "We know we haven’t made it easy here. For you. Or for each other.";
-                    dialogue_visible = true;
-                }
-                else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
-                    dialogue_visible = false;
-                    cutscene_step = 12;
-                }
-                break;
-
-            case 12:
-                if (!dialogue_visible) {
-                    dialogue_speaker = "Mother";
-                    current_dialogue = "You don’t have to say anything right now. But… if there’s anything on your mind, anything at all, we’re listening.";
-                    dialogue_visible = true;
-                }
-                else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
-                    dialogue_visible = false;
-                    cutscene_step = 13;
-                }
-                break;
-
-            case 13:
-                if (!dialogue_visible) {
-                    dialogue_speaker = "Narration";
-                    current_dialogue = "It’s quiet again. But not heavy. Just uncertain, like everyone’s waiting to see if someone will dare to be honest first.";
-                    dialogue_visible = true;
-                }
-                else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
-                    dialogue_visible = false;
-                    cutscene_step = 14;
-                }
-                break;
-
-            case 14:
-                if (!choice_made && !choice_active) {
-                    choice_options = [
-                        "I don’t know what to say yet… but I hear you.",
-                        "I’m tired. That’s all.",
-                        "Can we… maybe not do this right now?"
-                    ];
-                    choice_selected = 0;
-                    choice_active = true;
-                }
-                else if (choice_active) {
-                    if (keyboard_check_pressed(vk_down)) {
-                        choice_selected = (choice_selected + 1) % array_length(choice_options);
-                    }
-                    if (keyboard_check_pressed(vk_up)) {
-                        choice_selected = (choice_selected - 1 + array_length(choice_options)) % array_length(choice_options);
-                    }
-                    if (keyboard_check_pressed(vk_enter) || keyboard_check_pressed(vk_space)) {
-                        choice_made = true;
-                        choice_active = false;
-
-                        dialogue_speaker = "You";
-                        current_dialogue = choice_options[choice_selected];
-                        dialogue_visible = true;
-
-                        if (choice_selected == 0) player_mood += 1;
-                        else if (choice_selected == 1) player_mood -= 2;
-                        else if (choice_selected == 2) player_mood -= 1;
-
-                        global.player_mood = player_mood;
-
-                        cutscene_step = 14.5;
-                    }
-                }
-                break;
-
-            case 14.5:
-                if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
-                    dialogue_visible = false;
-                    cutscene_step = 15;
-                }
-                break;
-
-            case 15:
-                if (!dialogue_visible) {
-                    dialogue_speaker = "Narration";
-                    current_dialogue = "They both nod, almost at the same time.";
-                    dialogue_visible = true;
-                }
-                else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
-                    dialogue_visible = false;
-                    cutscene_step = 16;
-                }
-                break;
-
-            case 16:
-                if (!dialogue_visible) {
-                    dialogue_speaker = "Mother";
-                    current_dialogue = "Okay. Whenever you’re ready.";
-                    dialogue_visible = true;
-                }
-                else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
-                    dialogue_visible = false;
-                    cutscene_step = 17;
-                }
-                break;
-
-            case 17:
-                if (!dialogue_visible) {
-                    dialogue_speaker = "Father";
-                    current_dialogue = "We just want you to know you’re not alone. That’s all.";
-                    dialogue_visible = true;
-                }
-                else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
-                    dialogue_visible = false;
-                    cutscene_step = 18;
-                }
-                break;
-
-            case 18:
-                if (!dialogue_visible) {
-                    dialogue_speaker = "Narration";
-                    current_dialogue = "You don’t say anything else. The air feels different than it did this morning, not fixed, but softer. Like the ground isn't shaking quite as hard. You head back to your room.";
-                    dialogue_visible = true;
-                }
-                else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
-                    dialogue_visible = false;
-                    cutscene_step = 19;
-                }
-                break;
-
-            case 19:
-                if (!dialogue_visible) {
-                    dialogue_speaker = "Narration";
-                    current_dialogue = "The next day...";
-                    dialogue_visible = true;
-                }
-                else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
-                    dialogue_visible = false;
-                    cutscene_step = 20;
-                }
-                break;
-
-            case 20:
-                if (!dialogue_visible) {
-                    global.cutscene_id = 6;
-                    global.cutscene_active = true;
-                    room_goto(house_day3_scene1); // Next scene
-                }
-                break;
+    case 5: // Final narration and transition
+        if (!global.dialogue_visible) {
+            dialogue_speaker = "Narration";
+            current_dialogue = "You sink further into your seat, feeling like you’re on the edge of being seen, like you’re being watched but don’t want to be found. Your mind starts to wander. The thought of talking to someone, anyone, feels like a mountain you’re too tired to climb.";
+            global.dialogue_visible = true;
+        }
+        else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
+            global.dialogue_visible = false;
+            room_goto(room_Day2_Scene4); // Transition to the next room (lunch scene)
+            instance_destroy(); // Clean up this controller
         }
         break;
 }

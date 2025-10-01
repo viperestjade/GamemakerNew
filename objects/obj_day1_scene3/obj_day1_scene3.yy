@@ -1,17 +1,17 @@
 {
   "$GMObject":"",
-  "%Name":"obj_day1_scene3",
+  "%Name":"obj_Day1_Scene3",
   "eventList":[
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":64,"eventType":8,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"obj_day1_scene3",
+  "name":"obj_Day1_Scene3",
   "overriddenProperties":[],
   "parent":{
-    "name":"obj_cutscene",
-    "path":"folders/Objects/obj_cutscene.yy",
+    "name":"First Day",
+    "path":"folders/Objects/Story/First Day.yy",
   },
   "parentObjectId":null,
   "persistent":false,

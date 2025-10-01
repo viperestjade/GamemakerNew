@@ -1,15 +1,15 @@
 {
   "$GMObject":"",
-  "%Name":"obj_counselor",
+  "%Name":"obj_Counselor",
   "eventList":[
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
+    {"$GMEvent":"v1","%Name":"","collisionObjectId":{"name":"obj_MC","path":"objects/obj_MC/obj_MC.yy",},"eventNum":0,"eventType":4,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"obj_counselor",
+  "name":"obj_Counselor",
   "overriddenProperties":[],
   "parent":{
-    "name":"obj_npc",
-    "path":"folders/Objects/obj_npc.yy",
+    "name":"Characters",
+    "path":"folders/Objects/Characters.yy",
   },
   "parentObjectId":null,
   "persistent":false,
@@ -30,8 +30,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_counselor_idle",
-    "path":"sprites/spr_counselor_idle/spr_counselor_idle.yy",
+    "name":"spr_Counselor_Idle",
+    "path":"sprites/spr_Counselor_Idle/spr_Counselor_Idle.yy",
   },
   "spriteMaskId":null,
   "visible":true,
