@@ -30,8 +30,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_NPC_Idle",
-    "path":"sprites/spr_NPC_Idle/spr_NPC_Idle.yy",
+    "name":"spr_NPC1",
+    "path":"sprites/spr_NPC1/spr_NPC1.yy",
   },
   "spriteMaskId":null,
   "visible":true,

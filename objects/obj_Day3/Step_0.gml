@@ -20,7 +20,7 @@ switch (state) {
         if (fade_alpha <= 0) {
             fade_alpha = 0;
             state = "done";
-            room_goto(room_Day3_Scene1); // go to the next room
+            room_goto(Day_3_Summary); // go to the next room
         }
         break;
 }
