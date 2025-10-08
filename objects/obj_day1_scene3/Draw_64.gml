@@ -12,16 +12,15 @@ if (fade_alpha > 0) {
 var gui_w = display_get_gui_width();
 var gui_h = display_get_gui_height();
 var margin = 40;
-var text_x = margin;
+var text_x = margin + 150; // Shift text to the right to make space for portrait
 var text_y = gui_h - 160;
-var text_w = gui_w - (margin * 2);
+var text_w = gui_w - (margin * 2) - 150; // Reduce width so it doesn't overlap
 var dialogue_height = 100;
 
 // =================================================================
-// --- RESTORED: Dialogue Box Drawing ---
+// --- Dialogue Box Drawing ---
 // =================================================================
 if (global.dialogue_visible) {
-    // Set default alignment for dialogue
     draw_set_halign(fa_left);
     draw_set_valign(fa_top);
     
@@ -30,6 +29,28 @@ if (global.dialogue_visible) {
     draw_set_alpha(0.6);
     draw_rectangle(text_x - 10, text_y - 30, text_x + text_w + 10, text_y + dialogue_height, false);
     draw_set_alpha(1);
+
+    // ✅ Draw portrait only if there's a valid sprite
+    if (portrait_sprite != -1) {
+        var portrait_x = margin;
+        var portrait_y = text_y - 50;
+        var portrait_size = 140;
+
+        var spr_w = sprite_get_width(portrait_sprite);
+        var spr_h = sprite_get_height(portrait_sprite);
+
+        draw_sprite_ext(
+            portrait_sprite,
+            0,
+            portrait_x,
+            portrait_y,
+            portrait_size / spr_w,
+            portrait_size / spr_h,
+            0,
+            c_white,
+            1
+        );
+    }
 
     // Draw speaker name
     if (dialogue_speaker != "") {
@@ -58,18 +79,15 @@ if (choice_active) {
     var box_padding = 20;
     var box_height = (option_count * line_height) + (box_padding * 2);
 
-    // Calculate the bottom-center position
     var bottom_margin = 40;
     var box_x = (gui_w / 2) - (box_width / 2);
     var box_y = gui_h - box_height - bottom_margin;
     
-    // Draw the background box
     draw_set_color(c_black);
     draw_set_alpha(0.8);
     draw_rectangle(box_x, box_y, box_x + box_width, box_y + box_height, false);
     draw_set_alpha(1);
     
-    // Draw the options
     draw_set_halign(fa_center);
     draw_set_valign(fa_top);
     

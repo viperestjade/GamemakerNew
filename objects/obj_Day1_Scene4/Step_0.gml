@@ -29,78 +29,91 @@ if (!choice_active) { // Only advance dialogue if not in a choice menu
         dialogue_speaker = "Narration";
         current_dialogue = "You reach your classroom and slide into your usual seat near the window. It’s a decent spot, quiet and out of the way.";
         global.dialogue_visible = true;
+		portrait_sprite = -1;
         reset_typewriter();
     }
     else if (dialogue_stage == 0 && keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
         dialogue_stage = 1;
         dialogue_speaker = "Narration";
         current_dialogue = "You rest your arms on the desk, checking your phone. No messages.";
+		portrait_sprite = -1;
         reset_typewriter();
     }
     else if (dialogue_stage == 1 && keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
         dialogue_stage = 2;
         dialogue_speaker = "Narration";
         current_dialogue = "The teacher walks in, carrying a stack of papers and a kind of forced smile.";
+		portrait_sprite = -1;
         reset_typewriter();
     }
     else if (dialogue_stage == 2 && keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
         dialogue_stage = 3;
         dialogue_speaker = "Teacher";
         current_dialogue = "Alright, before we dive into lectures, we’re doing something different today. Group reflection activity.";
-        reset_typewriter();
+        portrait_sprite = spr_Profile_Teacher;
+		reset_typewriter();
     }
     else if (dialogue_stage == 3 && keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
         dialogue_stage = 4;
         dialogue_speaker = "Teacher";
         current_dialogue = "Don’t panic, no tests. Just thoughts.";
+		portrait_sprite = spr_Profile_TeacherT;
         reset_typewriter();
     }
     else if (dialogue_stage == 4 && keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
         dialogue_stage = 5;
         dialogue_speaker = "Narration";
         current_dialogue = "A few students groan. One kid says, “Can we skip this?”";
+		portrait_sprite = -1;
         reset_typewriter();
     }
     else if (dialogue_stage == 5 && keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
         dialogue_stage = 6;
         dialogue_speaker = "Teacher";
         current_dialogue = "Nope. You’ll be working in pairs. Talk about what’s been stressing you out lately, and more importantly, how you deal with it.";
-        reset_typewriter();
+        portrait_sprite = spr_Profile_TeacherT;
+		reset_typewriter();
     }
     else if (dialogue_stage == 6 && keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
         dialogue_stage = 7;
         dialogue_speaker = "Teacher";
         current_dialogue = "Be honest, or pretend to be. Up to you.";
+		portrait_sprite = spr_Profile_TeacherT;
         reset_typewriter();
     }
     else if (dialogue_stage == 7 && keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
         dialogue_stage = 8;
         dialogue_speaker = "Inner Thought";
         current_dialogue = "She’s pointing a finger at me?";
+		portrait_sprite = spr_Profile_IT;
         reset_typewriter();
     }
     else if (dialogue_stage == 8 && keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
         dialogue_stage = 9;
         dialogue_speaker = "Teacher";
         current_dialogue = "You and Casey. Back row.";
+		portrait_sprite = spr_Profile_TeacherT;
         reset_typewriter();
     }
     else if (dialogue_stage == 9 && keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
         dialogue_stage = 10;
         dialogue_speaker = "Inner Thought";
         current_dialogue = "Oh.";
+		portrait_sprite = spr_Profile_IT;
         reset_typewriter();
     }
     else if (dialogue_stage == 10 && keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
         dialogue_stage = 11;
         dialogue_speaker = "Casey";
         current_dialogue = "Guess we’re stress buddies for today.";
+		portrait_sprite = spr_Profile_Casey;
         reset_typewriter();
     }
     else if (dialogue_stage == 11 && keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
         dialogue_stage = 12;
         dialogue_speaker = "Casey";
         current_dialogue = "You good to start, or wanna flip a coin?";
+		portrait_sprite = spr_Profile_CaseyT;
         reset_typewriter();
     }
     else if (dialogue_stage == 12 && keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
@@ -118,7 +131,8 @@ if (!choice_active) { // Only advance dialogue if not in a choice menu
         dialogue_stage = 14;
         dialogue_speaker = "Casey";
         current_dialogue = "Fair enough. Mine’s mostly school. Plus some stuff at home, but... whatever.";
-        reset_typewriter();
+        portrait_sprite = spr_Profile_CaseyT;
+		reset_typewriter();
     }
     // --- MODIFIED: This is now the end of the scene ---
     else if (dialogue_stage == 14 && keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {

@@ -29,25 +29,29 @@ if (dialogue_stage == 0 && !global.dialogue_visible) {
     dialogue_speaker = "Narration";
     current_dialogue = "Bell rings faintly. Students chatter and shuffle through the school gates. You walk in, bag slung over one shoulder.";
     global.dialogue_visible = true;
+	portrait_sprite = -1;
     reset_typewriter();
 }
 else if (dialogue_stage == 0 && keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
     dialogue_stage = 1;
     dialogue_speaker = "Narration";
     current_dialogue = "You don’t really look around much, just head straight in, eyes low.";
+	portrait_sprite = -1;
     reset_typewriter();
 }
 else if (dialogue_stage == 1 && keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
     dialogue_stage = 2;
     dialogue_speaker = "Narration";
     current_dialogue = "A few classmates are already hanging out near the canteen, laughing about something that probably isn’t funny unless you were there for the start of the joke.";
-    reset_typewriter();
+    portrait_sprite = -1;
+	reset_typewriter();
 }
 else if (dialogue_stage == 2 && keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
     dialogue_stage = 3;
     dialogue_speaker = "Inner Thought";
     current_dialogue = "Feels like everyone else had a normal morning. I wonder if anyone else had to walk past a war zone just to get here.";
-    reset_typewriter();
+    portrait_sprite = spr_Profile_IT;
+	reset_typewriter();
 }
 else if (dialogue_stage == 3 && keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
     // End of the hallway scene
