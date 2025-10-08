@@ -1,11 +1,11 @@
 {
   "$GMObject":"",
-  "%Name":"obj_NPC",
+  "%Name":"obj_NPC2",
   "eventList":[
     {"$GMEvent":"v1","%Name":"","collisionObjectId":{"name":"obj_MC","path":"objects/obj_MC/obj_MC.yy",},"eventNum":0,"eventType":4,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"obj_NPC",
+  "name":"obj_NPC2",
   "overriddenProperties":[],
   "parent":{
     "name":"Characters",
@@ -30,8 +30,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_NPC1",
-    "path":"sprites/spr_NPC1/spr_NPC1.yy",
+    "name":"spr_NPC3",
+    "path":"sprites/spr_NPC3/spr_NPC3.yy",
   },
   "spriteMaskId":null,
   "visible":true,
