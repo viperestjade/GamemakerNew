@@ -196,6 +196,7 @@
     {"id":{"name":"spr_TeacherRW","path":"sprites/spr_TeacherRW/spr_TeacherRW.yy",},},
     {"id":{"name":"spr_Wall_Collision_1","path":"sprites/spr_Wall_Collision_1/spr_Wall_Collision_1.yy",},},
     {"id":{"name":"spr_Wall_Collision_2","path":"sprites/spr_Wall_Collision_2/spr_Wall_Collision_2.yy",},},
+    {"id":{"name":"Sprite50","path":"sprites/Sprite50/Sprite50.yy",},},
     {"id":{"name":"ts_Floor_and_Wall","path":"tilesets/ts_Floor_and_Wall/ts_Floor_and_Wall.yy",},},
     {"id":{"name":"ts_Interior","path":"tilesets/ts_Interior/ts_Interior.yy",},},
   ],
