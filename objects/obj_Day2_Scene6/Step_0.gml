@@ -34,6 +34,7 @@ switch (cutscene_step) {
         if (!global.dialogue_visible) {
             dialogue_speaker = "Mother";
             current_dialogue = "There’s stew on the stove. You can heat some up if you’re hungry.";
+			portrait_sprite = spr_Profile_Mother;
             global.dialogue_visible = true;
         }
         else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
@@ -47,6 +48,7 @@ switch (cutscene_step) {
             dialogue_speaker = "Father";
             current_dialogue = "Long day?";
             global.dialogue_visible = true;
+			portrait_sprite = spr_Profile_Father;
         }
         else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
             global.dialogue_visible = false;
@@ -59,6 +61,7 @@ switch (cutscene_step) {
             dialogue_speaker = "Narration";
             current_dialogue = "It’s the first thing he’s said to you in a while. It doesn’t demand a reply, just leaves space for one if you want it.";
             global.dialogue_visible = true;
+			portrait_sprite = -1;
         }
         else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
             global.dialogue_visible = false;
@@ -71,6 +74,7 @@ switch (cutscene_step) {
             dialogue_speaker = "Narration";
             current_dialogue = "You give a small shrug. Not because you’re trying to shut them out, but because you don’t know what to say yet.";
             global.dialogue_visible = true;
+			portrait_sprite = -1;
         }
         else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
             global.dialogue_visible = false;
@@ -100,6 +104,7 @@ switch (cutscene_step) {
             dialogue_speaker = "Mother";
             current_dialogue = "There’s still warm bread. I can slice some, if you want.";
             global.dialogue_visible = true;
+			portrait_sprite = spr_Profile_Mother;
         }
         else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
             global.dialogue_visible = false;
@@ -112,6 +117,7 @@ switch (cutscene_step) {
             dialogue_speaker = "Father";
             current_dialogue = "I think she can manage, hon. But if you want it, it’s there.";
             global.dialogue_visible = true;
+			portrait_sprite = spr_Profile_Father;
         }
         else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
             global.dialogue_visible = false;
@@ -124,6 +130,7 @@ switch (cutscene_step) {
             dialogue_speaker = "Narration";
             current_dialogue = "They’re trying, in their own quiet ways. No pressure. No questions. Just… space. Space that feels a little easier to breathe in tonight.";
             global.dialogue_visible = true;
+			portrait_sprite = -1;
         }
         else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
             global.dialogue_visible = false;
@@ -136,6 +143,7 @@ switch (cutscene_step) {
             dialogue_speaker = "Mother";
             current_dialogue = "We’ve been… thinking about things. About how things have felt lately.";
             global.dialogue_visible = true;
+			portrait_sprite = spr_Profile_MotherD;
         }
         else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
             global.dialogue_visible = false;
@@ -148,6 +156,7 @@ switch (cutscene_step) {
             dialogue_speaker = "Father";
             current_dialogue = "We know we haven’t made it easy here. For you. Or for each other.";
             global.dialogue_visible = true;
+			portrait_sprite = spr_Profile_FatherD;
         }
         else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
             global.dialogue_visible = false;
@@ -160,6 +169,7 @@ switch (cutscene_step) {
             dialogue_speaker = "Mother";
             current_dialogue = "You don’t have to say anything right now. But… if there’s anything on your mind, anything at all, we’re listening.";
             global.dialogue_visible = true;
+			portrait_sprite = spr_Profile_MotherD;
         }
         else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
             global.dialogue_visible = false;
@@ -201,6 +211,7 @@ switch (cutscene_step) {
                 choice_active = false;
 
                 dialogue_speaker = "You";
+				portrait_sprite = spr_Profile_MC;
                 current_dialogue = choice_options[choice_selected];
                 global.dialogue_visible = true;
 
@@ -225,6 +236,7 @@ switch (cutscene_step) {
         if (!global.dialogue_visible) {
             dialogue_speaker = "Narration";
             current_dialogue = "They both nod, almost at the same time.";
+			portrait_sprite = -1;
             global.dialogue_visible = true;
         }
         else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
@@ -237,6 +249,7 @@ switch (cutscene_step) {
         if (!global.dialogue_visible) {
             dialogue_speaker = "Mother";
             current_dialogue = "Okay. Whenever you’re ready.";
+			portrait_sprite = spr_Profile_Mother;
             global.dialogue_visible = true;
         }
         else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
@@ -249,6 +262,7 @@ switch (cutscene_step) {
         if (!global.dialogue_visible) {
             dialogue_speaker = "Father";
             current_dialogue = "We just want you to know you’re not alone. That’s all.";
+			portrait_sprite = spr_Profile_Father;
             global.dialogue_visible = true;
         }
         else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
@@ -260,6 +274,7 @@ switch (cutscene_step) {
     case 15: // MODIFIED FOR CONDITIONAL ENDING
         if (!global.dialogue_visible) {
             dialogue_speaker = "Narration";
+			portrait_sprite = -1;
 
             // Check the total mood score for Day 2 to determine the ending
             if (global.player_mood >= 3) {
@@ -282,6 +297,7 @@ switch (cutscene_step) {
         if (!global.dialogue_visible) {
             dialogue_speaker = "Narration";
             current_dialogue = "The next day...";
+			portrait_sprite = -1;
             global.dialogue_visible = true;
         }
         else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {

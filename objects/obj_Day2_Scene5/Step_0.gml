@@ -36,6 +36,7 @@ switch (cutscene_step) {
             dialogue_speaker = "Narration";
             current_dialogue = "You arrive home later than usual, the sky already dimming as the weight of the day presses on. The house feels quieter than before, but in a different way. The tension from this morning has shifted, and you can’t quite tell whether it’s better or worse.";
             global.dialogue_visible = true;
+			portrait_sprite = -1;
         }
         else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
             global.dialogue_visible = false;
@@ -48,6 +49,7 @@ switch (cutscene_step) {
             dialogue_speaker = "Narration";
             current_dialogue = "There’s the quiet clink of cutlery. The faint sound of the news hums from the living room. A gentle rustle of paper. You hear your parents, but they’re not talking to each other.";
             global.dialogue_visible = true;
+			portrait_sprite = -1;
         }
         else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
             // --- MODIFIED: End the cutscene here ---

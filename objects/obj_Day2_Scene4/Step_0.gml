@@ -32,6 +32,7 @@ switch (cutscene_step) {
             dialogue_speaker = "Narration";
             current_dialogue = "The lunch bell rings, and you head outside, but something’s different. You catch Casey’s eyes as she walks by. She slows down, hesitating for a second before making her way over to you.";
             global.dialogue_visible = true;
+			portrait_sprite = -1;
         }
         else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
             global.dialogue_visible = false;
@@ -76,6 +77,7 @@ switch (cutscene_step) {
             dialogue_speaker = "Casey";
             current_dialogue = "Hey, you okay? You’re not usually this... quiet.";
             global.dialogue_visible = true;
+			portrait_sprite = spr_Profile_CaseyT;
         }
         else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
             global.dialogue_visible = false;
@@ -104,6 +106,7 @@ switch (cutscene_step) {
                 choice_made = true;
                 choice_active = false;
                 dialogue_speaker = "You";
+				portrait_sprite = spr_Profile_MC;
                 current_dialogue = choice_options[choice_selected];
                 global.dialogue_visible = true;
                 
@@ -128,6 +131,7 @@ switch (cutscene_step) {
             dialogue_speaker = "Casey";
             current_dialogue = "Well ok but if you ever want to talk, I’m here. You don’t have to go through this alone, you know?";
             global.dialogue_visible = true;
+			portrait_sprite = spr_Profile_CaseyT;
         }
         else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
             global.dialogue_visible = false;

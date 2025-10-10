@@ -156,6 +156,7 @@
     {"name":"spr_Profile_CaseyT","order":1,"path":"sprites/spr_Profile_CaseyT/spr_Profile_CaseyT.yy",},
     {"name":"spr_Profile_FatherA","order":2,"path":"sprites/spr_Profile_FatherA/spr_Profile_FatherA.yy",},
     {"name":"spr_Profile_FatherAT","order":1,"path":"sprites/spr_Profile_FatherAT/spr_Profile_FatherAT.yy",},
+    {"name":"spr_Profile_FatherD","order":3,"path":"sprites/spr_Profile_FatherD/spr_Profile_FatherD.yy",},
     {"name":"spr_Profile_MC","order":1,"path":"sprites/spr_Profile_MC/spr_Profile_MC.yy",},
     {"name":"spr_Profile_MotherA","order":1,"path":"sprites/spr_Profile_MotherA/spr_Profile_MotherA.yy",},
     {"name":"spr_Profile_MotherAT","order":2,"path":"sprites/spr_Profile_MotherAT/spr_Profile_MotherAT.yy",},
