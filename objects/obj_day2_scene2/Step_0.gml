@@ -32,6 +32,7 @@ switch (cutscene_step) {
             dialogue_speaker = "Mother";
             current_dialogue = "I made eggs. You’ve got time, if you want to eat.";
             global.dialogue_visible = true;
+			portrait_sprite = spr_Profile_Mother;
         }
         else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
             global.dialogue_visible = false;
@@ -60,6 +61,7 @@ switch (cutscene_step) {
                 choice_made = true;
                 choice_active = false;
                 dialogue_speaker = "You";
+				portrait_sprite = spr_Profile_MC;
                 current_dialogue = choice_options[choice_selected];
                 global.dialogue_visible = true;
                 if (choice_selected == 0) player_mood += 1;
@@ -99,6 +101,7 @@ switch (cutscene_step) {
             dialogue_speaker = "Narration";
             current_dialogue = "You sit down at the small kitchen table. Your mom is still standing at the stove, her movements slow and mechanical, like she's trying to avoid saying anything else.";
             global.dialogue_visible = true;
+			portrait_sprite = -1;
         }
         else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
             global.dialogue_visible = false;
@@ -111,6 +114,7 @@ switch (cutscene_step) {
             dialogue_speaker = "Narration";
             current_dialogue = "The eggs sit in front of you, warm but unappealing. The house is quieter than usual, no loud arguments or tension filling the space, just the soft hum of the kitchen and the muted clatter of your mom’s movements.";
             global.dialogue_visible = true;
+			portrait_sprite = -1;
         }
         else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
             global.dialogue_visible = false;
@@ -123,6 +127,7 @@ switch (cutscene_step) {
             dialogue_speaker = "Mother";
             current_dialogue = "I’ll try to be home earlier today. I know things haven’t been easy for either of us.";
             global.dialogue_visible = true;
+			portrait_sprite = spr_Profile_MotherD;
         }
         else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
             global.dialogue_visible = false;
@@ -134,6 +139,7 @@ switch (cutscene_step) {
         if (!global.dialogue_visible) {
             dialogue_speaker = "You";
             current_dialogue = "Okay";
+			portrait_sprite = spr_Profile_MC;
             global.dialogue_visible = true;
         }
         else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
@@ -147,6 +153,7 @@ switch (cutscene_step) {
             dialogue_speaker = "Narration";
             current_dialogue = "No words need to be said. Your mom doesn’t press you, and you don’t press her either. It’s just quiet, the kind of quiet that feels like waiting for something, but you’re not sure what.";
             global.dialogue_visible = true;
+			portrait_sprite = -1;
         }
         else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
             global.dialogue_visible = false;
@@ -159,6 +166,7 @@ switch (cutscene_step) {
             dialogue_speaker = "Narration";
             current_dialogue = "After a few moments, you stand up, gathering your bag, and as you head for the door, your mom watches you with those tired eyes of hers. She doesn’t say anything else, just nods.";
             global.dialogue_visible = true;
+			portrait_sprite = -1;
         }
         else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
             global.dialogue_visible = false;

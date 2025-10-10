@@ -37,6 +37,7 @@ switch (cutscene_step) {
             dialogue_speaker = "Narration";
             current_dialogue = "The sun barely slips through the curtains. The room feels colder today, like the quiet before a storm, only there’s no yelling this time.";
             global.dialogue_visible = true;
+			portrait_sprite = -1;
         }
         else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
             global.dialogue_visible = false;
@@ -49,6 +50,7 @@ switch (cutscene_step) {
             dialogue_speaker = "Inner Thought";
             current_dialogue = "Maybe today won’t be like the others.";
             global.dialogue_visible = true;
+			portrait_sprite = spr_Profile_IT;
         }
         else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
             global.dialogue_visible = false;
@@ -61,6 +63,7 @@ switch (cutscene_step) {
             dialogue_speaker = "Narration";
             current_dialogue = "You slip out of bed, tugging on your clothes mechanically, as if you’ve done this too many times to care. Your bag feels heavier than usual, and your thoughts, they’re just as scattered.";
             global.dialogue_visible = true;
+			portrait_sprite = -1;
         }
         else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
             global.dialogue_visible = false;
@@ -73,6 +76,7 @@ switch (cutscene_step) {
             dialogue_speaker = "Narration";
             current_dialogue = "The sound of clattering dishes drifts to your room. It’s only your mom. She must be making breakfast, but there’s no noise beyond that. No shuffling, no small talk. Just the faint, rhythmic sound of someone trying not to be noticed.";
             global.dialogue_visible = true;
+			portrait_sprite = -1;
         }
         else if (keyboard_check_pressed(vk_space) && typewriter_index >= string_length(current_dialogue)) {
             // --- END OF BEDROOM CUTSCENE ---
